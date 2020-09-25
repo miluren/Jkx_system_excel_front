@@ -1,0 +1,779 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="favicon.ico">
+    <link rel="Shortcut Icon" href="favicon.ico"/>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css"/>
+    <link rel="stylesheet" href="static/h-ui.admin/js/webuploader/webuploader.css">
+<!--    <link rel="stylesheet" href="lib/datatables/plus/datatables.min.css">-->
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <!--/meta 作为公共模版分离出去-->
+    <style>
+        #picker {
+            display: inline-block;
+            line-height: 1.428571429;
+            vertical-align: middle;
+            margin: 0 12px 0 0;
+            width: 156px;
+        }
+
+        #picker .webuploader-pick {
+            padding: 6px 12px;
+            display: block;
+            background-color: red;
+        }
+        .table>tbody>tr>td{
+            text-align:center;
+        }
+        .toExcel{
+            float:left;
+            margin-bottom: 15px;
+        }
+        .selectFileds{
+            float:left;
+            margin-bottom: 15px;
+            margin-right: 15px;
+        }
+    </style>
+    <title>学生信息导出</title>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<div id="header"></div>
+<!--/_header 作为公共模版分离出去-->
+<!--_menu 作为公共模版分离出去-->
+<div id="menu"></div>
+<!--/_menu 作为公共模版分离出去-->
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span>
+        数据管理
+        <span class="c-gray en">&gt;</span>
+        学生信息导出
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+           href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="text-c">
+                <select name="singleCondition" id="singleCondition" class="select" style="width:70px;height: 30px;">
+                    <option value="studentNum">学号</option>
+                    <option value="studentName">姓名</option>
+                    <option value="class">班级</option>
+                    <option value="identityID">身份证</option>
+                    <option value="politicCountenance">政治面貌</option>
+                    <option value="nation">民族</option>
+
+                </select>
+                <input type="text" name="txtCondition" id="txtCondition" placeholder=" 请输入条件" style="width:120px"
+                       class="input-text">
+
+                &nbsp;&nbsp;&nbsp;
+<!--                日期范围：-->
+<!--                <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin"-->
+<!--                       class="input-text Wdate" style="width:120px;">-->
+<!--                - -->
+<!--                <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})"-->
+<!--                       id="logmax" class="input-text Wdate" style="width:120px;">-->
+
+                <button name="" id="btnSingleSearch" class="btn btn-success" onclick="singleSearch()"><i class="Hui-iconfont">&#xe665;</i> 开搜
+                </button>
+                <ul id="Huifold1" class="Huifold">
+                    <li class="item">
+                        <h4>多条件查询<b>+</b></h4>
+                        <div id="fliedCondition" class="info" style="height: 140px;">
+                            <div class="row cl">
+                                <div class="check-box" style="float:left;margin-top: 10px;">
+                                    <input type="checkbox" id="studentNum">
+                                    <label for="studentNum">学号：</label>
+                                    <input class="input-text" name="studentNum" type="text"
+                                           style="width:120px;height: 25px;">
+                                </div>
+                                <div class="check-box" style="float:left;margin-top: 10px;">
+                                    <input type="checkbox" id="studentName">
+                                    <label for="studentName">姓名：</label>
+                                    <input class="input-text" name="studentName" type="text"
+                                           style="width:120px;height: 25px;">
+                                </div>
+                                <div class="check-box" style="float:left;margin-top: 10px;">
+                                    <input type="checkbox" id="gender">
+                                    <label for="gender">性别：</label>
+                                    <select name="gender" style="width:140px;height: 25px;">
+                                        <option value="男" selected>男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </div>
+                                <div class="check-box" style="float:left;margin-top: 10px;">
+                                    <input type="checkbox" id="college">
+                                    <label for="college">系部：</label>
+                                    <input class="input-text" name="college" type="text"
+                                           style="width:120px;height: 25px;">
+                                </div>
+                                <div class="check-box" style="float:left;margin-top: 10px;">
+                                    <input type="checkbox" id="class">
+                                    <label for="class">班级：</label>
+                                    <input class="input-text" name="class" type="text"
+                                           style="width:120px;height: 25px;">
+                                </div>
+                                <div class="check-box" style="float:left;margin-top: 10px;">
+                                    <input type="checkbox" id="nation">
+                                    <label for="nation">民族：</label>
+                                    <input class="input-text" name="nation" type="text"
+                                           style="width:120px;height: 25px;">
+                                </div>
+                                <div class="check-box" style="float:left;margin-top: 10px;">
+                                    <input type="checkbox" id="politicCountenance">
+                                    <label for="politicCountenance">政治面貌：</label>
+                                    <select name="politicCountenance">
+                                        <option value="群众" selected>群众</option>
+                                        <option value="共青团员">共青团员</option>
+                                        <option value="中国预备党员">中共预备党员</option>
+                                        <option value="中共党员">中共党员</option>
+                                        <option value="民革会员">民革会员</option>
+                                        <option value="民盟盟员">民盟盟员</option>
+                                        <option value="民建会员">民建会员</option>
+                                        <option value="民进会员">民进会员</option>
+                                        <option value="农工党党员">农工党党员</option>
+                                        <option value="致公党党员">致公党党员</option>
+                                        <option value="九三学社社员">九三学社社员</option>
+                                        <option value="台盟盟员">台盟盟员</option>
+                                        <option value="无党派民主人士">无党派民主人士</option>
+                                    </select>
+                                </div>
+                                <div class="check-box" style="float:left;margin-top: 10px;">
+                                    <input type="checkbox" id="residentType">
+                                    <label for="residentType">户口性质：</label>
+                                    <select name="residentType" style="width:150px;">
+                                        <option value="农村" selected>农村</option>
+                                        <option value="城镇">城镇</option>
+                                    </select>
+                                </div>
+                                <div class="check-box" style="float:left;margin-top: 10px;">
+                                    <input type="checkbox" id="isLoan">
+                                    <label for="isLoan">是否贷款：</label>
+                                    <select name="isLoan">
+                                        <option value="是" selected>是</option>
+                                        <option value="否">否</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row cl" style="margin-top: 15px;">
+                                <div class="col-xs-12 col-sm-12">
+                                    <input id="bgSearch" onclick="bgSearch()" class="btn btn-primary radius" style="width:80%;margin:0 auto;" type="button" value="开始搜索">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="cl pd-5 bg-1 bk-gray mt-20">
+                    <span class="l">
+    <!--				<a href="javascript:;" onclick="xlsExport()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe645;</i> Excel导出</a>-->
+                        <!--				<a class="btn btn-primary radius" data-title="添加单个学生信息" _href="article-add.html"-->
+                        <!--                   onclick="article_add('添加资讯','article-add.html')" href="javascript:;"><i-->
+                        <!--                        class="Hui-iconfont">&#xe600;</i> 添加单个学生信息</a>-->
+                    </span>
+                        <span class="r">共有数据：<strong>54</strong> 条</span>
+                </div>
+                <div class="mt-20">
+                    <table id="tb" class="table table-border table-bordered table-bg table-hover table-sort">
+                        <thead>
+                        <tr class="text-c">
+<!--                            <th width="25"><input type="checkbox" name="" value=""></th>-->
+<!--                            <th width="80">序号</th>-->
+                            <th width="5">序号</th>
+                            <th width="80">学号</th>
+                            <th width="30">姓名</th>
+                            <th width="50">系部</th>
+                            <th width="40">班级</th>
+                            <th width="40">籍贯</th>
+                            <th width="40">民族</th>
+                            <th width="80">政治面貌</th>
+                            <th width="80">本人电话</th>
+                            <th width="80">身份证</th>
+                            <th width="80">家庭住址</th>
+                            <th width="80">考生号</th>
+                            <th width="80">父亲姓名</th>
+                            <th width="80">母亲姓名</th>
+                            <th width="80">父亲电话</th>
+                            <th width="80">母亲电话</th>
+                            <th width="80">衣服尺码</th>
+                            <th width="80">鞋码</th>
+                            <th width="80">职高\普高</th>
+                            <th width="80">寝室号</th>
+                            <th width="80">专业</th>
+                            <th width="80">生日</th>
+                            <th width="80">家庭电话</th>
+                            <th width="80">入学年级</th>
+                            <th width="80">入学方式</th>
+                            <th width="80">邮箱</th>
+                            <th width="80">学籍类别</th>
+                            <th width="80">学籍状态</th>
+                            <th width="80">证件类型</th>
+                            <th width="80">户口性质</th>
+                            <th width="80">开户银行</th>
+                            <th width="80">银行卡号</th>
+                            <th width="80">是否贷款</th>
+                            <th width="120">Id号</th>
+                        </tr>
+                        </thead>
+
+                    </table>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.page.js"></script>
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/datatables/1.10.15/jquery.dataTables.min.js"></script>
+<!--<script type="text/javascript" src="lib/datatables/plus/datatables.min.js"></script>-->
+<script type="text/javascript" src="lib/datatables/plus/JSZip-2.5.0/jszip.min.js"></script>
+<script type="text/javascript" src="lib/datatables/plus/pdfmake-0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="lib/datatables/plus/pdfmake-0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="lib/datatables/plus/Buttons-1.6.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="lib/datatables/plus/Buttons-1.6.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="lib/datatables/plus/Buttons-1.6.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="lib/datatables/plus/Buttons-1.6.2/js/buttons.print.min.js"></script>
+
+<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+<script src="static/h-ui.admin/js/webuploader/webuploader.js"></script>
+<script type="text/javascript" src="lib/FunctionJS.js"></script>
+<script type="text/javascript" src="lib/jquery.cookie/jquery.cookie.js"></script>
+<script type="text/javascript" src="lib/ColNameToColNum.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // 权限许可
+        // checkPermission();
+        var BASE_URL = "static/h-ui.admin/js/webuploader/";
+        $("#header").load("_header.html");
+        $("#menu").load("_menu.html");
+        setTimeout(function () {
+            var info = getUrlParam('info');
+            $(".Hui-aside").Huifold({
+                titCell: '.menu_dropdown dl dt',
+                mainCell: '.menu_dropdown dl dd',
+            });
+            $("#menu-export dt").addClass('selected');
+            $("#menu-export dd").css('display', 'block');
+            if (info == "1") {
+                $("#menu-export ul li:eq(0)").addClass('current');
+            } else {
+                $("#menu-export ul li:eq(1)").addClass('current');
+            }
+
+        }, 500);
+        jQuery.Huifold22 = function (obj, obj_c, speed, obj_type, Event) {
+            if (obj_type == 2) {
+                $(obj + ":first").find("b").html("-");
+                $(obj_c + ":first").show()
+            }
+            $(obj).bind(Event, function () {
+                if ($(this).next().is(":visible")) {
+                    if (obj_type == 2) {
+                        return false
+                    } else {
+                        $(this).next().slideUp(speed).end().removeClass("selected");
+                        $(this).find("b").html("+")
+                    }
+                } else {
+                    if (obj_type == 3) {
+                        $(this).next().slideDown(speed).end().addClass("selected");
+                        $(this).find("b").html("-")
+                    } else {
+                        $(obj_c).slideUp(speed);
+                        $(obj).removeClass("selected");
+                        $(obj).find("b").html("+");
+                        $(this).next().slideDown(speed).end().addClass("selected");
+                        $(this).find("b").html("-")
+                    }
+                }
+            })
+        };
+        var uploader = WebUploader.create({
+
+            // swf文件路径
+            swf: BASE_URL + 'Uploader.swf',
+            auto: true,
+            // 文件接收服务端。
+            server: '/tp5/student_info/uploadExcel',
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#picker',
+            accept: {
+                extensions: 'xls,xlsx', // 允许的文件后缀，不带点，多个用逗号分割，这里支持老版的Excel和新版的
+                mimeTypes: 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            },
+            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+            resize: false
+        });
+        var setHeader = function (object, data, headers) {
+            headers['Access-Control-Allow-Origin'] = '*';
+            headers['Access-Control-Request-Headers'] = 'content-type';
+            headers['Access-Control-Request-Method'] = 'POST';
+        };
+        uploader.on('uploadBeforeSend ', setHeader);
+        uploader.on('uploadSuccess', function (file, response) {
+            var r = response._raw;
+            r = JSON.parse(r);
+            console.log(r);
+            layer.open({
+                type: 2,
+                title: '导入操作',
+                shadeClose: true,
+                shade: false,
+                maxmin: false, //开启最大化最小化按钮
+                area: ['893px', '600px'],
+                content: '//fly.layui.com/'
+            });
+
+        });
+        uploader.on('uploadError', function (file, reason) {
+            console.log(file);
+            console.log(reason);
+            if (reason == "server") {
+                $("body").Huimodalalert({
+                    content: 'Excel内容有问题，请调整后上传',
+                    speed: 2000
+                });
+            } else {
+                $("body").Huimodalalert({
+                    content: '上传失败',
+                    speed: 2000
+                });
+            }
+
+        });
+        $.Huifold22("#Huifold1 .item h4", "#Huifold1 .item .info", "fast", 1, "click"); /*5个参数顺序不可打乱，分别是：相应区,隐藏显示的内容,速度,类型,事件*/
+        $.fn.dataTable.ext.buttons.selectFileds = {
+            text: '请先选择导出字段',
+            className:"btn btn-danger radius selectFileds",
+            action: function ( e, dt, node, config ) {
+                selectFileds();
+            }
+        };
+        $.fn.dataTable.ext.buttons.addInfo = {
+            text: '添加信息',
+            className:"btn btn-danger radius selectFileds",
+            action: function ( e, dt, node, config ) {
+                alert("还没有写相关代码");
+            }
+        };
+        $('.table-sort').dataTable({
+            "aaSorting": [[1, "desc"]],//默认第几个排序
+            "bStateSave": true,//状态保存
+            "ordering":false,
+            //"ajax":"/tp5/student_info/getStudentInfo",
+            ajax:{
+                url:"http://localhost:8080/jkxsys/studentInfo/list",
+                type:"get",
+                dataSrc:function(json){
+                    console.log(json);
+                    if(json.code == 200){
+                        return json.data;
+                    }else{
+                        location.href="/jkx/jkx/login.html";
+                    }
+                }
+            },
+            columns: [
+                { "data": null , defaultContent: '' },
+                { "data": "studentNum" },
+                { "data": "studentName"},
+                { "data": "college"},
+                { "data": "stuClass"},
+                { "data": "nativePlace"},
+                { "data": "nation"},
+                { "data": "politicCountenance"},
+                { "data": "selfTel"},
+                { "data": "identityID"},
+                { "data": "address"},
+                { "data": "examNum"},
+                { "data": "fatherName"},
+                { "data": "motherName"},
+                { "data": "fatherTel"},
+                { "data": "motherTel"},
+                { "data": "clothesSize"},
+                { "data": "shoeSize"},
+                { "data": "educationType"},
+                { "data": "dormNum"},
+                { "data": "major"},
+                { "data": "birthday"},
+                { "data": "familyTel"},
+                { "data": "inGrade"},
+                { "data": "inType"},
+                { "data": "email"},
+                { "data": "studyCategory"},
+                { "data": "studyStatus"},
+                { "data": "identityType"},
+                { "data": "residentType"},
+                { "data": "bank"},
+                { "data": "bankCardID"},
+                { "data": "isLoan"},
+                { "data": "Id"}
+            ],
+            "pageLength":15,
+            "fnDrawCallback": function(){
+                this.api().column(0).nodes().each(function(cell, i) {
+                    cell.innerHTML =  i + 1;
+                });
+            },
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'selectFileds',
+                },
+                {
+                    extend: 'excel',
+                    className:'btn btn-danger radius toExcel',
+                    text: '<i class="Hui-iconfont">&#xe645;</i>导出excel',
+                    exportOptions: {
+                        columns: [ 0, 1, 2, 5 ]
+                    }
+                },
+                {
+                    extend:'addInfo',
+                },
+
+            ],
+            // "oLanguage": {
+            //     "sLengthMenu": "每页显示 _MENU_ 条记录",
+            //     "sZeroRecords": "抱歉， 没有找到",
+            //     "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+            //     "sInfoEmpty": "没有数据",
+            //     "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+            //     "oPaginate": {
+            //         "sFirst": "首页",
+            //         "sPrevious": "前一页",
+            //         "sNext": "后一页",
+            //         "sLast": "尾页"
+            //     },
+            //     "sZeroRecords": "没有检索到数据",
+            //     "sProcessing": "<img src='./loading.gif' />"
+            // }
+            // "aoColumnDefs": [
+            //     //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+            //     {"orderable": false, "aTargets": [0, 8]}// 不参与排序的列
+            // ]
+        }).on('init.dt',function () {
+            $(".toExcel").attr({"disabled":"disabled"});
+            $(".toExcel").css("background-color","#D3D3D3");
+            $(".toExcel").css("border-color","#D3D3D3");
+            //$("#btn").removeAttr("disabled");
+            showDetail();
+        }).on('error.dt',function(e,settings,techNote,message){
+            layer.alert('数据加载错误，错误信息：'+message);
+        });
+        var needHiddenColumns=new Array(11,12,13,14,15,16,17,18,20,21,22,23,24,25,26,27,28,29,30,31,32,33)
+        var table = $('.table-sort').DataTable();
+        for(x in needHiddenColumns){
+            table.column( needHiddenColumns[x] ).visible( false, false );
+        }
+        table.columns.adjust().draw( false );
+        //modifyExportCol();
+
+    });
+    function selectFileds() {
+        layer.open({
+            type: 2,
+            title: '请选择你要导出的字段',
+            shadeClose: true,
+            shade: false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['993px', '900px'],
+            content: 'transfer.html'
+        });
+    }
+    function showDetail(){
+        // $(".table-sort tbody tr").dblclick(function(e){
+        //     //var index = $(this).context._DT_RowIndex; //行号
+        //     layer.open({
+        //         type: 2,
+        //         title: '学生具体信息',
+        //         shadeClose: true,
+        //         shade: false,
+        //         maxmin: true, //开启最大化最小化按钮
+        //         area: ['893px', '600px'],
+        //         content: 'studentDetail.html'
+        //     });
+        // });
+        $("#tb").on("dblclick", "tr", function() {
+            var cod=$(this).children('td').eq(2).text();
+            console.log(cod);
+            var hsdaf=$("#tb").dataTable().fnGetData(this).Id;
+            console.log(hsdaf);
+            layer.open({
+                type: 2,
+                title: '学生具体信息',
+                shadeClose: true,
+                shade: false,
+                maxmin: false, //开启最大化最小化按钮
+                area: ['893px', '600px'],
+                content: 'studentDetail.html'
+            });
+        });
+    }
+    function enableExportXls() {
+        $(".toExcel").removeAttr("disabled");
+        $(".toExcel").css("background-color","#dd514c");
+        $(".toExcel").css("border-color","#dd514c");
+    }
+    function disableExportXls() {
+        $(".toExcel").attr({"disabled":"disabled"});
+        $(".toExcel").css("background-color","#D3D3D3");
+        $(".toExcel").css("border-color","#D3D3D3");
+    }
+    function modifyExportCol() {
+        var tt=$('.table-sort').DataTable();
+        var exportCol=new Array();
+        var strs=$.cookie('selectedFileds');
+        var colName=new Array();
+        var colNum=new Array();
+        console.log(strs);
+        if(strs!="" && strs!=null){
+            colName=strs.split(',');
+            for(x in colName){
+                colNum.push(getColNumByColName(colName[x]));
+            }
+            tt.buttons()[1].inst.c.buttons[1].exportOptions.columns=colNum;
+            console.log(tt.buttons()[1].inst.c.buttons[1].exportOptions.columns);
+        }else{
+            alert("你还没有将选中的字段加入到右侧！")
+        }
+
+        // var needExportColumns=new Array(11,12,13,14,15,16,17,18,20,21,22,23,24,25,26,27,28,29,30,31,32,33)
+        // var table = $('.table-sort').DataTable();
+        // for(x in needHiddenColumns){
+        //     table.column( needHiddenColumns[x] ).visible( false, false );
+        // }
+        // table.columns.adjust().draw( false );
+        // tt.buttons[1].exportOptions={columns: [ 0, 1, 2, 5 ]};
+    }
+    function bgSearch() {
+        disableExportXls();
+        var cc=$("#fliedCondition input[type=checkbox]:checked");
+        var strJson="{";
+        for(var i=0;i<cc.length;i++){
+            var k=cc[i].id;
+            var v=$("[name="+k+"]").val();
+            strJson+='"'+k+'"' +":"+'"'+v+'"'+",";
+        }
+        strJson=strJson.substring(0,strJson.length-1)+"}";
+        var params=JSON.parse(strJson);
+        console.log("123");
+        initTable("/tp5/student_info/getSearchStudentInfo",params);
+        modifyExportCol();
+    }
+    function singleSearch() {
+        disableExportXls();
+        var singleType=$("#singleCondition").val();
+        var txtCondition=$("#txtCondition").val();
+        var strJson="{";
+        strJson+='"'+singleType+'"' +":"+'"'+txtCondition+'"'+",";
+        strJson=strJson.substring(0,strJson.length-1)+"}";
+        var url="/tp5/student_info/getSingleSearchStudentInfo";
+        var params=JSON.parse(strJson);
+        console.log(params);
+        initTable(url,params);
+        modifyExportCol();
+    }
+    function initTable(api,params) {
+        $('#tb').dataTable().fnDestroy();
+        $('#tb').dataTable({
+            "aaSorting": [[1, "desc"]],//默认第几个排序
+            "bStateSave": true,//状态保存
+            "ordering":false,
+            ajax:{
+                url:api,
+                type:"post",
+                data:params,//设置发送给服务器的数据（名称、格式）
+                dataSrc:function(json){
+                    if(json.ok=="1"){
+                        return json.data;
+                    }else{
+                        location.href="/tp5/public/jkxSystem/login.html";
+                    }
+                }
+            },
+            columns: [
+                { "data": null , defaultContent: '' },
+                { "data": "studentNum" },
+                { "data": "studentName"},
+                { "data": "college"},
+                { "data": "class"},
+                { "data": "nativePlace"},
+                { "data": "nation"},
+                { "data": "politicCountenance"},
+                { "data": "selfTel"},
+                { "data": "identityID"},
+                { "data": "address"},
+                { "data": "examNum"},
+                { "data": "fatherName"},
+                { "data": "motherName"},
+                { "data": "fatherTel"},
+                { "data": "motherTel"},
+                { "data": "clothesSize"},
+                { "data": "shoeSize"},
+                { "data": "educationType"},
+                { "data": "dormNum"},
+                { "data": "major"},
+                { "data": "birthday"},
+                { "data": "familyTel"},
+                { "data": "inGrade"},
+                { "data": "inType"},
+                { "data": "email"},
+                { "data": "studyCategory"},
+                { "data": "studyStatus"},
+                { "data": "identityType"},
+                { "data": "residentType"},
+                { "data": "bank"},
+                { "data": "bankCardID"},
+                { "data": "isLoan"},
+                { "data": null , defaultContent: ''}
+            ],
+            "pageLength":15,
+            "fnDrawCallback": function(){
+                this.api().column(0).nodes().each(function(cell, i) {
+                    cell.innerHTML =  i + 1;
+                });
+            },
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'selectFileds',
+                },
+                {
+                    extend: 'excel',
+                    className:'btn btn-danger radius toExcel',
+                    text: '<i class="Hui-iconfont">&#xe645;</i>导出结果',
+                    exportOptions: {
+
+                        columns: [ 0, 1, 2, 5 ]
+                    }
+                },
+
+            ]
+        });
+        var needHiddenColumns=new Array(11,12,13,14,15,16,17,18,20,21,22,23,24,25,26,27,28,29,30,31,32,33)
+        var table = $('.table-sort').DataTable();
+        for(x in needHiddenColumns){
+            table.column( needHiddenColumns[x] ).visible( false, false );
+        }
+        table.columns.adjust().draw( false );
+    }
+    /*资讯-添加*/
+    function article_add(title, url, w, h) {
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
+
+    /*资讯-编辑*/
+    function article_edit(title, url, id, w, h) {
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
+
+    /*资讯-删除*/
+    function article_del(obj, id) {
+        layer.confirm('确认要删除吗？', function (index) {
+            $.ajax({
+                type: 'POST',
+                url: '',
+                dataType: 'json',
+                success: function (data) {
+                    $(obj).parents("tr").remove();
+                    layer.msg('已删除!', {icon: 1, time: 1000});
+                },
+                error: function (data) {
+                    console.log(data.msg);
+                },
+            });
+        });
+    }
+
+    /*资讯-审核*/
+    function article_shenhe(obj, id) {
+        layer.confirm('审核文章？', {
+                btn: ['通过', '不通过', '取消'],
+                shade: false,
+                closeBtn: 0
+            },
+            function () {
+                $(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="article_start(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
+                $(obj).remove();
+                layer.msg('已发布', {icon: 6, time: 1000});
+            },
+            function () {
+                $(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="article_shenqing(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-danger radius">未通过</span>');
+                $(obj).remove();
+                layer.msg('未通过', {icon: 5, time: 1000});
+            });
+    }
+
+    /*资讯-下架*/
+    function article_stop(obj, id) {
+        layer.confirm('确认要下架吗？', function (index) {
+            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
+            $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
+            $(obj).remove();
+            layer.msg('已下架!', {icon: 5, time: 1000});
+        });
+    }
+
+    /*资讯-发布*/
+    function article_start(obj, id) {
+        layer.confirm('确认要发布吗？', function (index) {
+            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
+            $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
+            $(obj).remove();
+            layer.msg('已发布!', {icon: 6, time: 1000});
+        });
+    }
+
+    /*资讯-申请上线*/
+    function article_shenqing(obj, id) {
+        $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">待审核</span>');
+        $(obj).parents("tr").find(".td-manage").html("");
+        layer.msg('已提交申请，耐心等待审核!', {icon: 1, time: 2000});
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

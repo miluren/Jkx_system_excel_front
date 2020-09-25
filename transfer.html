@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css"/>
+    <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="static/h-ui/js/H-ui.js"></script>
+    <script type="text/javascript" src="lib/jquery.cookie/jquery.cookie.js"></script>
+    <title>穿梭框</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+            list-style: none;
+        }
+        #container{
+            width:850px;
+            height: 430px;
+            margin:80px auto;
+            padding:10px;
+        }
+        .warp{
+            width:610px;
+            height: 300px;
+            margin:65px auto;
+        }
+        .left{
+            width:200px;
+            height: 295px;
+            float: left;
+            border:1px solid #ebeef5;
+        }
+        .header{
+            width:179px;
+            height: 32px;
+            padding-left: 20px;
+            padding-top: 12px;
+            border:1px solid #ebeef5;
+            background-color: #F5F7FA;
+        }
+        .allCheckbox{
+            width:16px;
+            height: 16px;
+        }
+        .forCbHeader{
+            font-size: 16px;
+        }
+        .forCb{
+            font-size: 14px;
+        }
+        .transferBody{
+            float:left;
+            width:200px;
+            height: 246px;
+        }
+        .transferBody ul{
+            width:190px;
+            height: 246px;
+            overflow: auto;
+        }
+        .transferBody li{
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        .center{
+            width:200px;
+            height: 120px;
+            float: left;
+            padding:84px 0;
+            text-align: center;
+        }
+        .right{
+            width:200px;
+            height: 288px;
+            float: left;
+            border:1px solid #ebeef5;
+        }
+    </style>
+    <script type="text/javascript">
+        Array.prototype.indexOf = function (val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) {
+                    return i;
+                }
+            }
+            return -1;
+        };
+        // 通过索引删除数组元素
+        Array.prototype.remove = function (val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        var selectedFileds=new Array();
+        function add() {
+            var cc=$("#FieldList input[type=checkbox]:checked");
+            for(var i=0;i<cc.length;i++){
+                selectedFileds.push(cc[i].id);
+                var item=$("#FieldList #"+cc[i].id).parent().remove();
+                item.remove();
+                $("#selectedFieldList").append(item);
+            }
+            //console.log(selectedFileds);
+        }
+        function del() {
+            var cc=$("#selectedFieldList input[type=checkbox]:checked");
+            for(var i=0;i<cc.length;i++){
+                selectedFileds.remove(cc[i].id);
+                var item=$("#selectedFieldList #"+cc[i].id).parent().remove();
+                item.remove();
+                $("#FieldList").prepend(item);
+            }
+            //console.log(selectedFileds);
+        }
+        function yes() {
+            $.removeCookie('selectedFileds');
+            $.cookie('selectedFileds', selectedFileds);
+            var index=parent.layer.getFrameIndex(window.name);
+            parent.enableExportXls();
+            parent.modifyExportCol();
+            parent.layer.close(index);
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+        <div class="warp">
+            <div class="left">
+                <div class="header">
+                    <input type="checkbox" class="allCheckbox" id="cbHeader1">
+                    <label class="forCbHeader" for="cbHeader1">待选字段</label>
+                </div>
+                <div class="transferBody">
+                    <ul id="FieldList">
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="studentNum">
+                            <label class="forCb" for="studentNum">学号</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="studentName">
+                            <label class="forCb" for="studentName">姓名</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="college">
+                            <label class="forCb" for="college">系部</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="stuClass">
+                            <label class="forCb" for="stuClass">班级</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="nativePlace">
+                            <label class="forCb" for="nativePlace">籍贯</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="nation">
+                            <label class="forCb" for="nation">民族</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="politicCountenance">
+                            <label class="forCb" for="politicCountenance">政治面貌</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="selfTel">
+                            <label class="forCb" for="selfTel">本人电话</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="identityID">
+                            <label class="forCb" for="identityID">身份证</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="address">
+                            <label class="forCb" for="address">家庭住址</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="examID">
+                            <label class="forCb" for="examID">考生号</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="fatherName">
+                            <label class="forCb" for="fatherName">父亲姓名</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="motherName">
+                            <label class="forCb" for="motherName">母亲姓名</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="fatherTel">
+                            <label class="forCb" for="fatherTel">父亲电话</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="motherTel">
+                            <label class="forCb" for="motherTel">母亲电话</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="clothesSize">
+                            <label class="forCb" for="clothesSize">衣服尺码</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="shoeSize">
+                            <label class="forCb" for="shoeSize">鞋码</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="educationType">
+                            <label class="forCb" for="educationType">普高\职高</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="dormNum">
+                            <label class="forCb" for="dormNum">寝室号</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="major">
+                            <label class="forCb" for="major">专业</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="birthday">
+                            <label class="forCb" for="birthday">生日</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="familyTel">
+                            <label class="forCb" for="familyTel">家庭电话</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="inGrade">
+                            <label class="forCb" for="inGrade">入学年级</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="inType">
+                            <label class="forCb" for="inType">入学方式</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="email">
+                            <label class="forCb" for="email">邮箱</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="studyCategory">
+                            <label class="forCb" for="studyCategory">学籍类别</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="studyStatus">
+                            <label class="forCb" for="studyStatus">学籍状态</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="identityType">
+                            <label class="forCb" for="identityType">户口性质</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="bank">
+                            <label class="forCb" for="bank">开户银行</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="bankCardID">
+                            <label class="forCb" for="bankCardID">银行卡号</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="allCheckbox" id="isLoan">
+                            <label class="forCb" for="isLoan">是否贷款</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="center">
+                <button class="btn btn-primary radius" style="margin-top: 20px" onclick="add();">加入导出字段  ></button>
+                <button class="btn btn-danger  radius" style="margin-top: 20px" onclick="del()">退出导出字段  <</button>
+                <br>
+                <button class="btn btn-danger  radius" style="margin-top: 20px;width:125px;" onclick="yes()">确定</button>
+            </div>
+            <div class="right">
+                <div class="header">
+                    <input type="checkbox" class="allCheckbox" id="cbHeader2">
+                    <label class="forCbHeader" for="cbHeader2">已选字段</label>
+                </div>
+                <div class="transferBody">
+                    <ul id="selectedFieldList">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
