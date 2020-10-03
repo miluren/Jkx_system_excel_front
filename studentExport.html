@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin"/>
     <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css"/>
     <link rel="stylesheet" href="static/h-ui.admin/js/webuploader/webuploader.css">
-<!--    <link rel="stylesheet" href="lib/datatables/plus/datatables.min.css">-->
+    <!--    <link rel="stylesheet" href="lib/datatables/plus/datatables.min.css">-->
     <!--[if IE 6]>
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
@@ -40,15 +40,18 @@
             display: block;
             background-color: red;
         }
-        .table>tbody>tr>td{
-            text-align:center;
+
+        .table > tbody > tr > td {
+            text-align: center;
         }
-        .toExcel{
-            float:left;
+
+        .toExcel {
+            float: left;
             margin-bottom: 15px;
         }
-        .selectFileds{
-            float:left;
+
+        .selectFileds {
+            float: left;
             margin-bottom: 15px;
             margin-right: 15px;
         }
@@ -78,7 +81,7 @@
                 <select name="singleCondition" id="singleCondition" class="select" style="width:70px;height: 30px;">
                     <option value="studentNum">学号</option>
                     <option value="studentName">姓名</option>
-                    <option value="class">班级</option>
+                    <option value="stuClass">班级</option>
                     <option value="identityID">身份证</option>
                     <option value="politicCountenance">政治面貌</option>
                     <option value="nation">民族</option>
@@ -87,15 +90,8 @@
                 <input type="text" name="txtCondition" id="txtCondition" placeholder=" 请输入条件" style="width:120px"
                        class="input-text">
 
-                &nbsp;&nbsp;&nbsp;
-<!--                日期范围：-->
-<!--                <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin"-->
-<!--                       class="input-text Wdate" style="width:120px;">-->
-<!--                - -->
-<!--                <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})"-->
-<!--                       id="logmax" class="input-text Wdate" style="width:120px;">-->
-
-                <button name="" id="btnSingleSearch" class="btn btn-success" onclick="singleSearch()"><i class="Hui-iconfont">&#xe665;</i> 开搜
+                <button name="" id="btnSingleSearch" class="btn btn-success" onclick="singleSearch()"><i
+                        class="Hui-iconfont">&#xe665;</i> 开搜
                 </button>
                 <ul id="Huifold1" class="Huifold">
                     <li class="item">
@@ -129,8 +125,8 @@
                                            style="width:120px;height: 25px;">
                                 </div>
                                 <div class="check-box" style="float:left;margin-top: 10px;">
-                                    <input type="checkbox" id="class">
-                                    <label for="class">班级：</label>
+                                    <input type="checkbox" id="stuClass">
+                                    <label for="stuClass">班级：</label>
                                     <input class="input-text" name="class" type="text"
                                            style="width:120px;height: 25px;">
                                 </div>
@@ -178,7 +174,8 @@
                             </div>
                             <div class="row cl" style="margin-top: 15px;">
                                 <div class="col-xs-12 col-sm-12">
-                                    <input id="bgSearch" onclick="bgSearch()" class="btn btn-primary radius" style="width:80%;margin:0 auto;" type="button" value="开始搜索">
+                                    <input id="bgSearch" onclick="bgSearch()" class="btn btn-primary radius"
+                                           style="width:80%;margin:0 auto;" type="button" value="开始搜索">
                                 </div>
                             </div>
                         </div>
@@ -191,14 +188,14 @@
                         <!--                   onclick="article_add('添加资讯','article-add.html')" href="javascript:;"><i-->
                         <!--                        class="Hui-iconfont">&#xe600;</i> 添加单个学生信息</a>-->
                     </span>
-                        <span class="r">共有数据：<strong>54</strong> 条</span>
+                    <span class="r">共有数据：<strong>54</strong> 条</span>
                 </div>
                 <div class="mt-20">
                     <table id="tb" class="table table-border table-bordered table-bg table-hover table-sort">
                         <thead>
                         <tr class="text-c">
-<!--                            <th width="25"><input type="checkbox" name="" value=""></th>-->
-<!--                            <th width="80">序号</th>-->
+                            <!--                            <th width="25"><input type="checkbox" name="" value=""></th>-->
+                            <!--                            <th width="80">序号</th>-->
                             <th width="5">序号</th>
                             <th width="80">学号</th>
                             <th width="30">姓名</th>
@@ -374,75 +371,75 @@
         $.Huifold22("#Huifold1 .item h4", "#Huifold1 .item .info", "fast", 1, "click"); /*5个参数顺序不可打乱，分别是：相应区,隐藏显示的内容,速度,类型,事件*/
         $.fn.dataTable.ext.buttons.selectFileds = {
             text: '请先选择导出字段',
-            className:"btn btn-danger radius selectFileds",
-            action: function ( e, dt, node, config ) {
+            className: "btn btn-danger radius selectFileds",
+            action: function (e, dt, node, config) {
                 selectFileds();
             }
         };
         $.fn.dataTable.ext.buttons.addInfo = {
             text: '添加信息',
-            className:"btn btn-danger radius selectFileds",
-            action: function ( e, dt, node, config ) {
+            className: "btn btn-danger radius selectFileds",
+            action: function (e, dt, node, config) {
                 alert("还没有写相关代码");
             }
         };
         $('.table-sort').dataTable({
             "aaSorting": [[1, "desc"]],//默认第几个排序
             "bStateSave": true,//状态保存
-            "ordering":false,
+            "ordering": false,
             //"ajax":"/tp5/student_info/getStudentInfo",
-            ajax:{
-                url:"http://localhost:8080/jkxsys/studentInfo/list",
-                type:"get",
-                dataSrc:function(json){
+            ajax: {
+                url: "http://localhost:8080/jkxsys/student-info/list",
+                type: "get",
+                dataSrc: function (json) {
                     console.log(json);
-                    if(json.code == 200){
+                    if (json.code == 200) {
                         return json.data;
-                    }else{
-                        location.href="/jkx/jkx/login.html";
+                    } else {
+                        location.href = "/jkx/jkx/login.html";
                     }
                 }
             },
             columns: [
-                { "data": null , defaultContent: '' },
-                { "data": "studentNum" },
-                { "data": "studentName"},
-                { "data": "college"},
-                { "data": "stuClass"},
-                { "data": "nativePlace"},
-                { "data": "nation"},
-                { "data": "politicCountenance"},
-                { "data": "selfTel"},
-                { "data": "identityID"},
-                { "data": "address"},
-                { "data": "examNum"},
-                { "data": "fatherName"},
-                { "data": "motherName"},
-                { "data": "fatherTel"},
-                { "data": "motherTel"},
-                { "data": "clothesSize"},
-                { "data": "shoeSize"},
-                { "data": "educationType"},
-                { "data": "dormNum"},
-                { "data": "major"},
-                { "data": "birthday"},
-                { "data": "familyTel"},
-                { "data": "inGrade"},
-                { "data": "inType"},
-                { "data": "email"},
-                { "data": "studyCategory"},
-                { "data": "studyStatus"},
-                { "data": "identityType"},
-                { "data": "residentType"},
-                { "data": "bank"},
-                { "data": "bankCardID"},
-                { "data": "isLoan"},
-                { "data": "Id"}
+                {"data": null, defaultContent: ''},
+                {"data": "studentNum"},
+                {"data": "studentName"},
+                {"data": "college"},
+                {"data": "stuClass"},
+                {"data": "nativePlace"},
+                {"data": "nation"},
+                {"data": "politicCountenance"},
+                {"data": "selfTel"},
+                {"data": "identityID"},
+                {"data": "address"},
+                {"data": "examNum"},
+                {"data": "fatherName"},
+                {"data": "motherName"},
+                {"data": "fatherTel"},
+                {"data": "motherTel"},
+                {"data": "clothesSize"},
+                {"data": "shoeSize"},
+                {"data": "educationType"},
+                {"data": "dormNum"},
+                {"data": "major"},
+                {"data": "birthday"},
+                {"data": "familyTel"},
+                {"data": "inGrade"},
+                {"data": "inType"},
+                {"data": "email"},
+                {"data": "studyCategory"},
+                {"data": "studyStatus"},
+                {"data": "identityType"},
+                {"data": "residentType"},
+                {"data": "bank"},
+                {"data": "bankCardID"},
+                {"data": "isLoan"},
+                {"data": "Id"}
             ],
-            "pageLength":15,
-            "fnDrawCallback": function(){
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML =  i + 1;
+            "pageLength": 15,
+            "fnDrawCallback": function () {
+                this.api().column(0).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
                 });
             },
             dom: 'Bfrtip',
@@ -452,14 +449,14 @@
                 },
                 {
                     extend: 'excel',
-                    className:'btn btn-danger radius toExcel',
+                    className: 'btn btn-danger radius toExcel',
                     text: '<i class="Hui-iconfont">&#xe645;</i>导出excel',
                     exportOptions: {
-                        columns: [ 0, 1, 2, 5 ]
+                        columns: [0, 1, 2, 5]
                     }
                 },
                 {
-                    extend:'addInfo',
+                    extend: 'addInfo',
                 },
 
             ],
@@ -482,24 +479,25 @@
             //     //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
             //     {"orderable": false, "aTargets": [0, 8]}// 不参与排序的列
             // ]
-        }).on('init.dt',function () {
-            $(".toExcel").attr({"disabled":"disabled"});
-            $(".toExcel").css("background-color","#D3D3D3");
-            $(".toExcel").css("border-color","#D3D3D3");
+        }).on('init.dt', function () {
+            $(".toExcel").attr({"disabled": "disabled"});
+            $(".toExcel").css("background-color", "#D3D3D3");
+            $(".toExcel").css("border-color", "#D3D3D3");
             //$("#btn").removeAttr("disabled");
             showDetail();
-        }).on('error.dt',function(e,settings,techNote,message){
-            layer.alert('数据加载错误，错误信息：'+message);
+        }).on('error.dt', function (e, settings, techNote, message) {
+            layer.alert('数据加载错误，错误信息：' + message);
         });
-        var needHiddenColumns=new Array(11,12,13,14,15,16,17,18,20,21,22,23,24,25,26,27,28,29,30,31,32,33)
+        var needHiddenColumns = new Array(11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33)
         var table = $('.table-sort').DataTable();
-        for(x in needHiddenColumns){
-            table.column( needHiddenColumns[x] ).visible( false, false );
+        for (x in needHiddenColumns) {
+            table.column(needHiddenColumns[x]).visible(false, false);
         }
-        table.columns.adjust().draw( false );
+        table.columns.adjust().draw(false);
         //modifyExportCol();
 
     });
+
     function selectFileds() {
         layer.open({
             type: 2,
@@ -511,24 +509,12 @@
             content: 'transfer.html'
         });
     }
-    function showDetail(){
-        // $(".table-sort tbody tr").dblclick(function(e){
-        //     //var index = $(this).context._DT_RowIndex; //行号
-        //     layer.open({
-        //         type: 2,
-        //         title: '学生具体信息',
-        //         shadeClose: true,
-        //         shade: false,
-        //         maxmin: true, //开启最大化最小化按钮
-        //         area: ['893px', '600px'],
-        //         content: 'studentDetail.html'
-        //     });
-        // });
-        $("#tb").on("dblclick", "tr", function() {
-            var cod=$(this).children('td').eq(2).text();
-            console.log(cod);
-            var hsdaf=$("#tb").dataTable().fnGetData(this).Id;
-            console.log(hsdaf);
+
+    function showDetail() {
+
+        $("#tb").on("dblclick", "tr", function () {
+            var cod = $(this).children('td').eq(2).text();
+            var hsdaf = $("#tb").dataTable().fnGetData(this).Id;
             layer.open({
                 type: 2,
                 title: '学生具体信息',
@@ -536,35 +522,38 @@
                 shade: false,
                 maxmin: false, //开启最大化最小化按钮
                 area: ['893px', '600px'],
-                content: 'studentDetail.html'
+                content: 'studentDetail.html?id='+hsdaf
             });
         });
     }
+
     function enableExportXls() {
         $(".toExcel").removeAttr("disabled");
-        $(".toExcel").css("background-color","#dd514c");
-        $(".toExcel").css("border-color","#dd514c");
+        $(".toExcel").css("background-color", "#dd514c");
+        $(".toExcel").css("border-color", "#dd514c");
     }
+
     function disableExportXls() {
-        $(".toExcel").attr({"disabled":"disabled"});
-        $(".toExcel").css("background-color","#D3D3D3");
-        $(".toExcel").css("border-color","#D3D3D3");
+        $(".toExcel").attr({"disabled": "disabled"});
+        $(".toExcel").css("background-color", "#D3D3D3");
+        $(".toExcel").css("border-color", "#D3D3D3");
     }
+
     function modifyExportCol() {
-        var tt=$('.table-sort').DataTable();
-        var exportCol=new Array();
-        var strs=$.cookie('selectedFileds');
-        var colName=new Array();
-        var colNum=new Array();
+        var tt = $('.table-sort').DataTable();
+        var exportCol = new Array();
+        var strs = $.cookie('selectedFileds');
+        var colName = new Array();
+        var colNum = new Array();
         console.log(strs);
-        if(strs!="" && strs!=null){
-            colName=strs.split(',');
-            for(x in colName){
+        if (strs != "" && strs != null) {
+            colName = strs.split(',');
+            for (x in colName) {
                 colNum.push(getColNumByColName(colName[x]));
             }
-            tt.buttons()[1].inst.c.buttons[1].exportOptions.columns=colNum;
+            tt.buttons()[1].inst.c.buttons[1].exportOptions.columns = colNum;
             console.log(tt.buttons()[1].inst.c.buttons[1].exportOptions.columns);
-        }else{
+        } else {
             alert("你还没有将选中的字段加入到右侧！")
         }
 
@@ -576,92 +565,102 @@
         // table.columns.adjust().draw( false );
         // tt.buttons[1].exportOptions={columns: [ 0, 1, 2, 5 ]};
     }
+
     function bgSearch() {
         disableExportXls();
-        var cc=$("#fliedCondition input[type=checkbox]:checked");
-        var strJson="{";
-        for(var i=0;i<cc.length;i++){
-            var k=cc[i].id;
-            var v=$("[name="+k+"]").val();
-            strJson+='"'+k+'"' +":"+'"'+v+'"'+",";
+        let cc = $("#fliedCondition input[type=checkbox]:checked");
+        let strJson = {};
+        for (let i = 0; i < cc.length; i++) {
+            let k = cc[i].id;
+            let v = $("[name=" + k + "]").val();
+            strJson[k] = v;
         }
-        strJson=strJson.substring(0,strJson.length-1)+"}";
-        var params=JSON.parse(strJson);
-        console.log("123");
-        initTable("/tp5/student_info/getSearchStudentInfo",params);
+        let url = "http://localhost:8080/jkxsys/student-info/query";
+        initTable(url, strJson);
         modifyExportCol();
     }
+
     function singleSearch() {
         disableExportXls();
-        var singleType=$("#singleCondition").val();
-        var txtCondition=$("#txtCondition").val();
-        var strJson="{";
-        strJson+='"'+singleType+'"' +":"+'"'+txtCondition+'"'+",";
-        strJson=strJson.substring(0,strJson.length-1)+"}";
-        var url="/tp5/student_info/getSingleSearchStudentInfo";
-        var params=JSON.parse(strJson);
-        console.log(params);
-        initTable(url,params);
+        let singleType = $("#singleCondition").val();
+        let txtCondition = $("#txtCondition").val();
+
+        let strJson = {};
+        console.log(singleType);
+        console.log(txtCondition);
+        strJson[singleType] = txtCondition;
+        var url = "http://localhost:8080/jkxsys/student-info/query";
+        initTable(url, strJson);
         modifyExportCol();
     }
-    function initTable(api,params) {
+
+    function initTable(api, params) {
+
         $('#tb').dataTable().fnDestroy();
         $('#tb').dataTable({
             "aaSorting": [[1, "desc"]],//默认第几个排序
             "bStateSave": true,//状态保存
-            "ordering":false,
-            ajax:{
-                url:api,
-                type:"post",
-                data:params,//设置发送给服务器的数据（名称、格式）
-                dataSrc:function(json){
-                    if(json.ok=="1"){
+            "ordering": false,
+            // "ajax":"/tp5/student_info/getStudentInfo",
+            "ajax":{
+                "url": api,
+                "type":"get",
+                "data": {
+                    //设置发送给服务器的数据（名称、格式）
+                    'stu-info': JSON.stringify(params)
+                },
+                // "headers": {
+                //     'Content-Type': 'application/json;charset=UTF-8'
+                // },
+                "dataSrc": function(json){
+                    // console.log(json);
+                    if(json.code == 200){
                         return json.data;
                     }else{
-                        location.href="/tp5/public/jkxSystem/login.html";
+                        alert("没有搜索到数据，请刷新重试")
                     }
                 }
             },
             columns: [
-                { "data": null , defaultContent: '' },
-                { "data": "studentNum" },
-                { "data": "studentName"},
-                { "data": "college"},
-                { "data": "class"},
-                { "data": "nativePlace"},
-                { "data": "nation"},
-                { "data": "politicCountenance"},
-                { "data": "selfTel"},
-                { "data": "identityID"},
-                { "data": "address"},
-                { "data": "examNum"},
-                { "data": "fatherName"},
-                { "data": "motherName"},
-                { "data": "fatherTel"},
-                { "data": "motherTel"},
-                { "data": "clothesSize"},
-                { "data": "shoeSize"},
-                { "data": "educationType"},
-                { "data": "dormNum"},
-                { "data": "major"},
-                { "data": "birthday"},
-                { "data": "familyTel"},
-                { "data": "inGrade"},
-                { "data": "inType"},
-                { "data": "email"},
-                { "data": "studyCategory"},
-                { "data": "studyStatus"},
-                { "data": "identityType"},
-                { "data": "residentType"},
-                { "data": "bank"},
-                { "data": "bankCardID"},
-                { "data": "isLoan"},
-                { "data": null , defaultContent: ''}
+                {"data": null, defaultContent: ''},
+                {"data": "studentNum"},
+                {"data": "studentName"},
+                {"data": "college"},
+                {"data": "stuClass"},
+                {"data": "nativePlace"},
+                {"data": "nation"},
+                {"data": "politicCountenance"},
+                {"data": "selfTel"},
+                {"data": "identityID"},
+                {"data": "address"},
+                {"data": "examNum"},
+                {"data": "fatherName"},
+                {"data": "motherName"},
+                {"data": "fatherTel"},
+                {"data": "motherTel"},
+                {"data": "clothesSize"},
+                {"data": "shoeSize"},
+                {"data": "educationType"},
+                {"data": "dormNum"},
+                {"data": "major"},
+                {"data": "birthday"},
+                {"data": "familyTel"},
+                {"data": "inGrade"},
+                {"data": "inType"},
+                {"data": "email"},
+                {"data": "studyCategory"},
+                {"data": "studyStatus"},
+                {"data": "identityType"},
+                {"data": "residentType"},
+                {"data": "bank"},
+                {"data": "bankCardID"},
+                {"data": "isLoan"},
+                {"data": null, defaultContent: ''}
             ],
-            "pageLength":15,
-            "fnDrawCallback": function(){
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML =  i + 1;
+            "pageLength": 15,
+            "fnDrawCallback": function () {
+                this.api().column(0).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
                 });
             },
             dom: 'Bfrtip',
@@ -671,23 +670,23 @@
                 },
                 {
                     extend: 'excel',
-                    className:'btn btn-danger radius toExcel',
+                    className: 'btn btn-danger radius toExcel',
                     text: '<i class="Hui-iconfont">&#xe645;</i>导出结果',
                     exportOptions: {
-
-                        columns: [ 0, 1, 2, 5 ]
+                        columns: [0, 1, 2, 5]
                     }
                 },
 
             ]
         });
-        var needHiddenColumns=new Array(11,12,13,14,15,16,17,18,20,21,22,23,24,25,26,27,28,29,30,31,32,33)
+        var needHiddenColumns = new Array(11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33)
         var table = $('.table-sort').DataTable();
-        for(x in needHiddenColumns){
-            table.column( needHiddenColumns[x] ).visible( false, false );
+        for (x in needHiddenColumns) {
+            table.column(needHiddenColumns[x]).visible(false, false);
         }
-        table.columns.adjust().draw( false );
+        table.columns.adjust().draw(false);
     }
+
     /*资讯-添加*/
     function article_add(title, url, w, h) {
         var index = layer.open({

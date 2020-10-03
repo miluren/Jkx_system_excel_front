@@ -1,0 +1,10 @@
+#warn{
+    width: 260px;
+    color: grey;
+    padding: 0px;
+    margin: 0px auto;
+}
+#saveBtn {
+    margin-top: 30px;
+    width: 100%;
+}
