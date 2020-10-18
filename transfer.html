@@ -105,6 +105,7 @@
                 var item=$("#FieldList #"+cc[i].id).parent().remove();
                 item.remove();
                 $("#selectedFieldList").append(item);
+                console.log($("#selectedFieldList").text())
             }
             //console.log(selectedFileds);
         }
@@ -179,8 +180,8 @@
                             <label class="forCb" for="address">家庭住址</label>
                         </li>
                         <li>
-                            <input type="checkbox" class="allCheckbox" id="examID">
-                            <label class="forCb" for="examID">考生号</label>
+                            <input type="checkbox" class="allCheckbox" id="examNum">
+                            <label class="forCb" for="examNum">考生号</label>
                         </li>
                         <li>
                             <input type="checkbox" class="allCheckbox" id="fatherName">

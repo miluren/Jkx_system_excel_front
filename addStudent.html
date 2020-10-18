@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="./lib/css/studentDetail.css" type="text/css">
+    <link rel="stylesheet" href="./lib/layui-v2.5.6/layui/css/layui.css"  media="all">
+    <script src="./lib/layui-v2.5.6/layui/layui.js" charset="utf-8"></script>
+
+    <title>添加学生信息</title>
+</head>
+<body>
+<div id="warn">注:请选中之后再修改，否则视为没有修改</div>
+<div id="fliedCondition" class="check-box" style="float:left;margin-top: 10px;width: 890px">
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="studentNum" >
+            <label for="studentNum">学号：</label>
+            <input class="input-text" name="studentNum" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="studentName">
+            <label for="studentName">姓名：</label>
+            <input class="input-text" name="studentName" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="gender">
+            <label for="gender">性别：</label>
+            <select name="gender" style="width:140px;height: 25px;">
+                <option value="男" selected>男</option>
+                <option value="女">女</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="college">
+            <label for="college">系部：</label>
+            <input class="input-text" name="college" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="stuClass">
+            <label for="stuClass">班级：</label>
+            <input class="input-text" name="stuClass" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="nation">
+            <label for="nation">民族：</label>
+            <input class="input-text" name="nation" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="politicCountenance">
+            <label for="politicCountenance">政治面貌：</label>
+            <select name="politicCountenance">
+                <option value="群众" selected>群众</option>
+                <option value="共青团员">共青团员</option>
+                <option value="中国预备党员">中共预备党员</option>
+                <option value="中共党员">中共党员</option>
+                <option value="民革会员">民革会员</option>
+                <option value="民盟盟员">民盟盟员</option>
+                <option value="民建会员">民建会员</option>
+                <option value="民进会员">民进会员</option>
+                <option value="农工党党员">农工党党员</option>
+                <option value="致公党党员">致公党党员</option>
+                <option value="九三学社社员">九三学社社员</option>
+                <option value="台盟盟员">台盟盟员</option>
+                <option value="无党派民主人士">无党派民主人士</option>
+            </select>
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="residentType">
+            <label for="residentType">户口性质：</label>
+            <select name="residentType" style="width:150px;">
+                <option value="农村" selected>农村</option>
+                <option value="城镇">城镇</option>
+            </select>
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="isLoan">
+            <label for="isLoan">是否贷款：</label>
+            <select name="isLoan">
+                <option value="是" selected>是</option>
+                <option value="否">否</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="photo">
+            <label for="photo">相片路径：</label>
+            <input class="input-text" name="photo" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="birthday">
+            <label for="birthday">生日：</label>
+            <input class="input-text" name="birthday" type="date"
+                   style="width:120px;height: 25px;" id="today">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="nativePlace">
+            <label for="nativePlace">籍贯：</label>
+            <input class="input-text" name="nativePlace" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="familyTel">
+            <label for="familyTel">家庭电话：</label>
+            <input class="input-text" name="familyTel" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="inGrade">
+            <label for="inGrade">入学年级：</label>
+            <input class="input-text" name="inGrade" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="inType">
+            <label for="inType">入学方式：</label>
+            <select name="inType">
+                <option value="统招" selected>统招</option>
+                <option value="对口">对口</option>
+                <option value="保送">保送</option>
+                <option value="其他">其他</option>
+
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="email">
+            <label for="email">邮箱：</label>
+            <input class="input-text" name="email" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="studyCategory">
+            <label for="studyCategory">学籍类别：</label>
+            <select name="studyCategory">
+                <option value="正常" selected>正常</option>
+                <option value="退学">退学</option>
+                <option value="休学">休学</option>
+                <option value="暂缓">暂缓</option>
+                <option value="其他">其他</option>
+            </select>
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="studyStatus">
+            <label for="studyStatus">学籍状态：</label>
+            <select name="studyStatus">
+                <option value="正常" selected>正常</option>
+                <option value="专升本">专升本</option>
+                <option value="跳级">跳级</option>
+                <option value="其他">其他</option>
+
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="bank">
+            <label for="bank">开户银行：</label>
+            <input class="input-text" name="bank" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="bankCardID">
+            <label for="bankCardID">银行卡号：</label>
+            <input class="input-text" name="bankCardID" type="number"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="studentPlace">
+            <label for="studentPlace">生源地：</label>
+            <input class="input-text" name="studentPlace" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="identityType">
+            <label for="identityType">证件类型：</label>
+            <select name="identityType">
+                <option value="身份证" selected>身份证</option>
+                <option value="军官证">军官证</option>
+                <option value="其他">其他</option>
+            </select>
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="identityID">
+            <label for="identityID">身份证：</label>
+            <input class="input-text" name="identityID" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="fatherName">
+            <label for="fatherName">父亲名字：</label>
+            <input class="input-text" name="fatherName" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="fatherTel">
+            <label for="fatherTel">父亲电话：</label>
+            <input class="input-text" name="fatherTel" type="number"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="motherName">
+            <label for="motherName">母亲名字：</label>
+            <input class="input-text" name="motherName" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="motherTel">
+            <label for="motherTel">母亲电话：</label>
+            <input class="input-text" name="motherTel" type="number"
+                   style="width:120px;height: 25px;">
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="address">
+            <label for="address">家庭地址：</label>
+            <input class="input-text" name="address" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="clothesSize">
+            <label for="clothesSize">衣服尺寸：</label>
+            <input class="input-text" name="clothesSize" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="shoeSize">
+            <label for="shoeSize">鞋码：</label>
+            <input class="input-text" name="shoeSize" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="educationType">
+            <label for="educationType">职高/普高：</label>
+            <select name="educationType">
+                <option value="普高" selected>普高</option>
+                <option value="职高">职高</option>
+            </select>
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="dormNum">
+            <label for="dormNum">寝室号：</label>
+            <input class="input-text" name="dormNum" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="examNum">
+            <label for="examNum">考号：</label>
+            <input class="input-text" name="examNum" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="gradeFatherTel">
+            <label for="gradeFatherTel">爷爷电话：</label>
+            <input class="input-text" name="gradeFatherTel" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="gradeMotherTel">
+            <label for="gradeMotherTel">奶奶电话：</label>
+            <input class="input-text" name="gradeMotherTel" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="religion">
+            <label for="religion">宗教信仰：</label>
+            <input class="input-text" name="religion" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-left: 10px">
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="major">
+            <label for="major">专业：</label>
+            <input class="input-text" name="major" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+        <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+            <input type="checkbox" checked id="selfTel">
+            <label for="selfTel">本人电话：</label>
+            <input class="input-text" name="selfTel" type="text"
+                   style="width:120px;height: 25px;">
+        </div>
+
+
+    </div>
+
+    <!--        <div class="layui-row" style="margin-left: 10px">-->
+    <!--            <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">-->
+    <!--                <input type="checkbox" checked id="gradeFatherTel">-->
+    <!--                <label for="gradeFatherTel">基本格式：修改上面id，此行for，下面name</label>-->
+    <!--                <input class="input-text" name="gradeFatherTel" type="text"-->
+    <!--                       style="width:120px;height: 25px;">-->
+    <!--&lt;!&ndash;                <select name="studyCategory">&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <option value="正常" selected>正常</option>&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <option value="专升本">专升本</option>&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <option value="跳级">跳级</option>&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <option value="其他">其他</option>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </select>&ndash;&gt;-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <button id="saveBtn" class="layui-btn layui-btn-normal">添加</button>
+
+
+</div>
+
+</div>
+
+<script type="text/javascript" src="lib/SelectOption.js"></script>
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/Config.js"></script>
+<script type="text/javascript" src="lib/saveToken.js"></script>
+
+<script>
+    $(function (){
+        let time = new Date();
+        let day = ("0" + time.getDate()).slice(-2);
+        let month = ("0" + (time.getMonth() + 1)).slice(-2);
+        let today = time.getFullYear() + "-" + (month) + "-" + (day);
+        $('#today').val(today);
+        console.log(getToken());
+        $("#saveBtn").click(function () {
+            let cc = $("#fliedCondition input[type=checkbox]:checked");
+            let strJson = {};
+            for (let i = 0; i < cc.length; i++) {
+                let k = cc[i].id;
+                let v = $("[name="+k+"]").val();
+                strJson[k] = v;
+            }
+            console.log(strJson);
+            console.log(JSON.stringify(strJson))
+            let url = serverUrl+"/jkxsys/student-info/insertOne";
+            $.ajax({
+                "url": url,
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json",
+                    "token": getToken()
+                },
+                "data": JSON.stringify(strJson),
+                "success": function(result){
+                    if (result.msg == "success") {
+                        alert("添加成功")
+                    } else {
+                        alert(result.msg)
+                    }
+                    // 关闭当前页面
+                    let index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                },
+                "error": function (){
+                    alert("添加失败")
+                }
+            })
+        })
+
+    })
+</script>
+</body>
+</html>

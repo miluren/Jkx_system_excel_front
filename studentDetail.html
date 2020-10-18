@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="./lib/layui-v2.5.6/layui/css/layui.css"  media="all">
     <script src="./lib/layui-v2.5.6/layui/layui.js" charset="utf-8"></script>
 
+    <script type="text/javascript" src="lib/saveToken.js"></script>
+
     <title>学生信息详情</title>
 </head>
 <body>
@@ -48,7 +50,7 @@
             <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
                 <input type="checkbox" id="stuClass">
                 <label for="stuClass">班级：</label>
-                <input class="input-text" name="class" type="text"
+                <input class="input-text" name="stuClass" type="text"
                        style="width:120px;height: 25px;">
             </div>
             <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
@@ -106,7 +108,7 @@
             <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
                 <input type="checkbox" id="birthday">
                 <label for="birthday">生日：</label>
-                <input class="input-text" name="birthday" type="text"
+                <input class="input-text" name="birthday" type="date"
                        style="width:120px;height: 25px;">
             </div>
             <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
@@ -154,7 +156,8 @@
                 <input type="checkbox" id="studyCategory">
                 <label for="studyCategory">学籍类别：</label>
                 <select name="studyCategory">
-                    <option value="退学" selected>退学</option>
+                    <option value="正常" selected>正常</option>
+                    <option value="退学">退学</option>
                     <option value="休学">休学</option>
                     <option value="暂缓">暂缓</option>
                     <option value="其他">其他</option>
@@ -163,7 +166,7 @@
             <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
                 <input type="checkbox" id="studyStatus">
                 <label for="studyStatus">学籍状态：</label>
-                <select name="studyCategory">
+                <select name="studyStatus">
                     <option value="正常" selected>正常</option>
                     <option value="专升本">专升本</option>
                     <option value="跳级">跳级</option>
@@ -263,7 +266,7 @@
         <div class="layui-row" style="margin-left: 10px">
             <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
                 <input type="checkbox" id="educationType">
-                <label for="educationType">职高还是普高：</label>
+                <label for="educationType">职高/普高：</label>
                 <select name="educationType">
                     <option value="普高" selected>普高</option>
                     <option value="职高">职高</option>
@@ -311,7 +314,18 @@
                 <input class="input-text" name="photo" type="text"
                        style="width:120px;height: 25px;">
             </div>
-
+            <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+                <input type="checkbox" id="major">
+                <label for="major">专业：</label>
+                <input class="input-text" name="major" type="text"
+                       style="width:120px;height: 25px;">
+            </div>
+            <div class="check-box layui-col-xs4" style="float:left;margin-top: 10px;">
+                <input type="checkbox" id="selfTel">
+                <label for="selfTel">本人电话：</label>
+                <input class="input-text" name="selfTel" type="text"
+                       style="width:120px;height: 25px;">
+            </div>
 
         </div>
 
@@ -336,28 +350,34 @@
 
 <script type="text/javascript" src="lib/SelectOption.js"></script>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/Config.js"></script>
+
 <script>
     $(function (){
         let id = window.location.href.split("=")[1]//得到lemon
-        let studentInfo;
+        // let studentInfo;
         $.ajax({
-            url: 'http://localhost:8080/jkxsys/student-info/queryById',
+            url: serverUrl+'/jkxsys/student-info/queryById',
+            headers: {
+                token : getToken()
+            },
             data: {
-                id: id
+                id: id,
             },
             success: function (result){
-                studentInfo = result
+                console.log(result);
+                // studentInfo = result
                 let check = $("#fliedCondition input[type=checkbox]");
 
                 for (let i = 0; i < check.length; i++) {
                     let k = check[i].id;
                     let option = getOption(k);
                     if (typeof option === "string") {
-                        // console.log(studentInfo.data[k])
-                        $("#fliedCondition").find("option[value="+studentInfo.data[k]+"]").attr("selected",true);
+                        // console.log(result.data[k])
+                        $("#fliedCondition").find("option[value="+result.data[k]+"]").attr("selected",true);
                         // console.log(k);
                     }else {
-                        $("[name=" + k + "]").attr('value',studentInfo.data[k])
+                        $("[name=" + k + "]").val(result.data[k])
                     }
                 }
             },
@@ -375,17 +395,27 @@
                 strJson[k] = v;
             }
             console.log(strJson);
-            let url = "http://localhost:8080/jkxsys/student-info/update";
+            let url = serverUrl+"/jkxsys/student-info/update";
             $.ajax({
                 "url": url,
                 "method": "POST",
                 "timeout": 0,
                 "headers": {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "token": getToken()
                 },
                 "data": JSON.stringify(strJson),
                 "success": function(result){
-                    alert(result.msg)
+                    alert(result.msg);
+                    // 关闭当前页面
+                    let index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                },
+                "error": function (){
+                    alert("修改失败")
+                    // 关闭当前页面
+                    let index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
                 }
             })
         })

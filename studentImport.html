@@ -247,6 +247,8 @@
 <script src="static/h-ui.admin/js/webuploader/webuploader.js"></script>
 <script type="text/javascript" src="lib/FunctionJS.js"></script>
 <script type="text/javascript" src="lib/jqueryui/jquery-ui.js"></script>
+<script type="text/javascript" src="lib/Config.js"></script>
+<script type="text/javascript" src="lib/saveToken.js"></script>
 
 <script type="text/javascript">
 	$(function() {
@@ -305,7 +307,10 @@
 		    swf: BASE_URL + 'Uploader.swf',
 		    auto: true,
 		    // 文件接收服务端。
-		    server: 'http://localhost:8080/jkxsys/student-info/insert',
+		    server: serverUrl+'/jkxsys/student-info/insert',
+            headers: {
+                token: localStorage.getItem("token")
+            },
 
 		    // 选择文件的按钮。可选。
 		    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
@@ -318,6 +323,16 @@
 		    resize: false,
             fileVal:'multipartFile', // [默认值：'file'] 设置文件上传域的name。
 		});
+
+        // 上传成功
+        uploader.on( 'uploadSuccess', function( file ) {
+            window.location.reload()
+        });
+
+        // 文件上传失败，显示上传出错。
+        uploader.on( 'uploadError', function( file ) {
+            alert("上传失败")
+        });
 
 		var setHeader = function (object, data, headers) {
 		    headers['Access-Control-Allow-Origin'] = '*';
@@ -357,15 +372,20 @@
 
 	   });
 
-       $.Huifold22("#Huifold1 .item h4", "#Huifold1 .item .info", "fast", 1, "click"); /*5个参数顺序不可打乱，分别是：相应区,隐藏显示的内容,速度,类型,事件*/
-       $('.table-sort').dataTable({
+        $.Huifold22("#Huifold1 .item h4", "#Huifold1 .item .info", "fast", 1, "click"); /*5个参数顺序不可打乱，分别是：相应区,隐藏显示的内容,速度,类型,事件*/
+        // 处理为空后的弹窗
+        $.fn.dataTable.ext.errMode = function(s,h,m){};
+        $('.table-sort').dataTable({
            "aaSorting": [[1, "desc"]],//默认第几个排序
            "bStateSave": true,//状态保存
            "ordering":false,
            //"ajax":"/tp5/student_info/getStudentInfo",
            ajax:{
-               url:"http://localhost:8080/jkxsys/student-info/list",
+               url: serverUrl+"/jkxsys/student-info/list",
                type:"get",
+               headers: {
+                 token: localStorage.getItem("token")
+               },
                dataSrc:function(json){
                    if(json.code == 200){
                        return json.data;
@@ -375,40 +395,40 @@
                }
            },
            columns: [
-               { "data": null , defaultContent: '' },
-               { "data": "studentNum" },
-               { "data": "studentName"},
-               { "data": "college"},
-               { "data": "stuClass"},
-               { "data": "nativePlace"},
-               { "data": "nation"},
-               { "data": "politicCountenance"},
-               { "data": "selfTel"},
-               { "data": "identityID"},
-               { "data": "address"},
-               { "data": "examNum"},
-               { "data": "fatherName"},
-               { "data": "motherName"},
-               { "data": "fatherTel"},
-               { "data": "motherTel"},
-               { "data": "clothesSize"},
-               { "data": "shoeSize"},
-               { "data": "educationType"},
-               { "data": "dormNum"},
-               { "data": "major"},
-               { "data": "birthday"},
-               { "data": "familyTel"},
-               { "data": "inGrade"},
-               { "data": "inType"},
-               { "data": "email"},
-               { "data": "studyCategory"},
-               { "data": "studyStatus"},
-               { "data": "identityType"},
-               { "data": "residentType"},
-               { "data": "bank"},
-               { "data": "bankCardID"},
-               { "data": "isLoan"},
-               { "data": "Id"}
+               {"data": null, defaultContent: ''},
+               {"data": "studentNum", defaultContent: ''},
+               {"data": "studentName", defaultContent: ''},
+               {"data": "college", defaultContent: ''},
+               {"data": "stuClass", defaultContent: ''},
+               {"data": "nativePlace", defaultContent: ''},
+               {"data": "nation", defaultContent: ''},
+               {"data": "politicCountenance", defaultContent: ''},
+               {"data": "selfTel", defaultContent: ''},
+               {"data": "identityID", defaultContent: ''},
+               {"data": "address", defaultContent: ''},
+               {"data": "examNum", defaultContent: 0},
+               {"data": "fatherName", defaultContent: ''},
+               {"data": "motherName", defaultContent: ''},
+               {"data": "fatherTel", defaultContent: 0},
+               {"data": "motherTel", defaultContent: 0},
+               {"data": "clothesSize", defaultContent: ''},
+               {"data": "shoeSize", defaultContent: 0},
+               {"data": "educationType", defaultContent: ''},
+               {"data": "dormNum", defaultContent: 0},
+               {"data": "major", defaultContent: ''},
+               {"data": "birthday", defaultContent: ''},
+               {"data": "familyTel", defaultContent: ''},
+               {"data": "inGrade", defaultContent: ''},
+               {"data": "inType", defaultContent: ''},
+               {"data": "email", defaultContent: ''},
+               {"data": "studyCategory", defaultContent: ''},
+               {"data": "studyStatus", defaultContent: ''},
+               {"data": "identityType", defaultContent: ''},
+               {"data": "residentType", defaultContent: ''},
+               {"data": "bank", defaultContent: ''},
+               {"data": "bankCardID", defaultContent: ''},
+               {"data": "isLoan", defaultContent: ''},
+               {"data": "Id", defaultContent: ''}
            ],
            "pageLength":15,
            "fnDrawCallback": function(){

@@ -71,10 +71,13 @@
 <script type="text/javascript" src="lib/FunctionJS.js"></script>
 <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="lib/jquery.cookie/jquery.cookie.js"></script>
+<script type="text/javascript" src="lib/Config.js"></script>
+<script type="text/javascript" src="lib/saveToken.js"></script>
+
 <script>
 	$(function () {
 		$("#btnLogin").click(function () {
-			let url="http://localhost:8080/jkxsys/login";
+			let url= serverUrl+"/jkxsys/login";
 			let params = {
 				"account": $("#account").val(),
 				"password": $("#pwd").val()
@@ -84,15 +87,14 @@
 				contentType: 'application/json; charset=UTF-8',
 				url: url,
 				data: JSON.stringify(params),
-				success: function (data) {
-					console.log(data);
-					r = data;
-					if(r.code == 200){
-						//localStorage.setItem('token',r.token);
-						let millisecond = new Date().getTime();
-						let expiresTime = new Date(millisecond + 60 * 1000 * 30);//30分钟
-						$.cookie('token',r.token,{ expires: expiresTime, path: '/' });
-						$.cookie('account',$("#account").val(),{ expires: expiresTime, path: '/' });
+				success: function (data, textStatus, request) {
+					// 保存token
+					saveToken(request.getResponseHeader('token'))
+					if(data.code == 200){
+						// let millisecond = new Date().getTime();
+						// let expiresTime = new Date(millisecond + 60 * 1000 * 30);//30分钟
+						// $.cookie('token',data.token,{ expires: expiresTime, path: '/' });
+						// $.cookie('account',$("#account").val(),{ expires: expiresTime, path: '/' });
 						location.href='index.html';
 					}else{
 						layer.alert("用户名或密码错误");
