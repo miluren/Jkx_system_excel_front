@@ -82,25 +82,16 @@
 				"account": $("#account").val(),
 				"password": $("#pwd").val()
 			}
-			$.ajax({
-				type: 'post',
-				contentType: 'application/json; charset=UTF-8',
-				url: url,
-				data: JSON.stringify(params),
-				success: function (data, textStatus, request) {
-					// 保存token
-					saveToken(request.getResponseHeader('token'))
-					if(data.code == 200){
-						// let millisecond = new Date().getTime();
-						// let expiresTime = new Date(millisecond + 60 * 1000 * 30);//30分钟
-						// $.cookie('token',data.token,{ expires: expiresTime, path: '/' });
-						// $.cookie('account',$("#account").val(),{ expires: expiresTime, path: '/' });
-						location.href='index.html';
-					}else{
-						layer.alert("用户名或密码错误");
-					}
+			getAjaxSetTimeout(url, "post", JSON.stringify(params), 0, function (data, textStatus, request) {
+				// 保存token
+				saveToken(request.getResponseHeader('token'))
+				if(data.code == 200){
+					location.href='index.html';
+				}else{
+					layer.alert("用户名或密码错误");
 				}
-			});
+			})
+
 		})
 	})
 </script>

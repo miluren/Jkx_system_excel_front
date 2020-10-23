@@ -308,6 +308,7 @@
 		    auto: true,
 		    // 文件接收服务端。
 		    server: serverUrl+'/jkxsys/student-info/insert',
+            timeout: 0,
             headers: {
                 token: localStorage.getItem("token")
             },
@@ -383,6 +384,7 @@
            ajax:{
                url: serverUrl+"/jkxsys/student-info/list",
                type:"get",
+               timeout: 0,
                headers: {
                  token: localStorage.getItem("token")
                },
